@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="UEd-ft-5Fe">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+    </dependencies>
+    <scenes>
+        <!--新浪微博-->
+        <scene sceneID="4OI-T0-64r">
+            <objects>
+                <viewController id="nTt-i8-XtO" customClass="OAuthViewController" customModule="WCWeiBo" customModuleProvider="target" sceneMemberID="viewController">
+                    <webView key="view" contentMode="scaleToFill" id="bNM-Ia-eDj">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="delegate" destination="nTt-i8-XtO" id="3D9-Lg-Haz"/>
+                        </connections>
+                    </webView>
+                    <navigationItem key="navigationItem" title="新浪微博" id="Mu6-M3-A6F">
+                        <barButtonItem key="rightBarButtonItem" title="关闭" id="WLF-Ij-MDM">
+                            <connections>
+                                <action selector="close" destination="nTt-i8-XtO" id="dG4-Ea-Zb7"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="crJ-ko-QSv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1494" y="708"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="X3G-pA-i6T">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UEd-ft-5Fe" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="OIp-Me-Jfu">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="nTt-i8-XtO" kind="relationship" relationship="rootViewController" id="10G-co-hfJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AMe-0V-Yqz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="682" y="708"/>
+        </scene>
+    </scenes>
+</document>
