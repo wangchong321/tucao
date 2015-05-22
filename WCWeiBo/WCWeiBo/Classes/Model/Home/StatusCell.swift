@@ -29,6 +29,8 @@ class StatusCell: UITableViewCell {
     @IBOutlet weak var pictureView: UICollectionView!
     /// 底部视图
     @IBOutlet weak var bottomVIew: UIView!
+    /// 转发文本
+    @IBOutlet weak var retweetedLabel: UILabel!
     
     var status : Status?{
         didSet{
@@ -38,27 +40,36 @@ class StatusCell: UITableViewCell {
             contentLabele.text = status?.text
             iconVIew.sd_setImageWithURL(status?.user?.iconUrl)
             let pSize = calcPictureViewSize(status!)
-            println(pSize)
-            // 宽高写反了
+           
             pictureViewWidth.constant = pSize.viewSize.width
             pictureViewHeigth.constant = pSize.viewSize.height
             pictureViewLayout.itemSize = pSize.itemSize
-        
-            ///  刷新数据
+            
+            retweetedLabel?.text = (status?.retweeted_status?.user?.name ?? "") + ":" + (status?.retweeted_status?.text ?? "")
+                       ///  刷新数据
             pictureView.reloadData()
         }
     }
     override func awakeFromNib() {
         super.awakeFromNib()
        contentLabele.preferredMaxLayoutWidth = UIScreen.mainScreen().bounds.width - 20
+         retweetedLabel?.preferredMaxLayoutWidth = UIScreen.mainScreen().bounds.width - 20
         
     }
-
+    ///  选择cell的id
+    class func identifi(status : Status)->(String!){
+        if status.retweeted_status != nil {
+            return "RetweetedCell"
+        }
+      return "HomeCell"
+        
+    }
+    ///  计算行高
     func rowHeight( status : Status ) -> CGFloat{
        self.status = status
         layoutIfNeeded()
         let y = CGRectGetMaxY(bottomVIew.frame)
-        
+       // println(y)
     return y
     }
 private func calcPictureViewSize(status : Status) -> (viewSize : CGSize, itemSize : CGSize){
@@ -66,29 +77,27 @@ private func calcPictureViewSize(status : Status) -> (viewSize : CGSize, itemSiz
     let itemSize = CGSizeMake(s, s)
     let m : CGFloat = 10.0
     /// 图片的数量
-    let imageCount = status.imageURLs?.count ?? 0
+    let imageCount = status.pictureURLs?.count ?? 0
     ///  没有图片时
-    println(status.imageURLs?.count)
-    //TODO: 111
-    if status.pictureURLs?.count == 0 {
-        println("没有图片")
+    if imageCount == 0 {
+       // println("没有图片")
         return (CGSizeZero, itemSize)
     }
     /// 一张图片的时候 
-    if status.pictureURLs?.count == 1 {
+    if imageCount == 1 {
         let key = status.pictureURLs![0].absoluteString
         let image = SDWebImageManager.sharedManager().imageCache.imageFromMemoryCacheForKey(key)
-        println("单张图片\(image.size)")
+       // println("单张图片\(image.size)\(imageCount)")
         return (image.size,image.size)
     }
     ///  四张图片的时
-    if status.pictureURLs?.count == 4 {
+    if imageCount == 4 {
         var s = CGSizeMake(s * 2 + m, s * 2 + m)
-        println("四张图片\(s)")
+      //  println("四张图片\(s)\(imageCount)")
         return (s, itemSize)
     }
     ///  多张图片时候
-    
+    //println("四张图片\(s)\(imageCount)")
     let row = CGFloat((imageCount - 1)/3 + 1)
     return (CGSizeMake(s * 3 + 2 * m, s * row + (row - 1) * m), itemSize)
     
@@ -101,7 +110,9 @@ extension StatusCell : UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return status?.pictureURLs?.count ?? 0
     }
+  
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("HomeCollectionCell", forIndexPath: indexPath) as! PictureCell
         cell.url = status!.pictureURLs![indexPath.item]
         
@@ -115,6 +126,7 @@ class PictureCell : UICollectionViewCell {
         didSet{
            
             iconView.sd_setImageWithURL(url)
+            
         }
     }
     

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0435E4941AFF80A700AA09E6 /* Visitor.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0435E4931AFF80A700AA09E6 /* Visitor.xib */; };
+		043F158A1B0DBDD6003411FD /* HomeRefresh.xib in Resources */ = {isa = PBXBuildFile; fileRef = 043F15891B0DBDD6003411FD /* HomeRefresh.xib */; };
+		043F158E1B0DBEA4003411FD /* HomeRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043F158D1B0DBEA4003411FD /* HomeRefresh.swift */; };
 		044F5FC31AFF965D00BC0FEB /* MainTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044F5FC21AFF965D00BC0FEB /* MainTabBar.swift */; };
 		044F5FC51AFF976400BC0FEB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 044F5FC41AFF976400BC0FEB /* Main.storyboard */; };
 		045856351B09A3CD003C1F29 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045856341B09A3CD003C1F29 /* User.swift */; };
@@ -61,6 +63,8 @@
 
 /* Begin PBXFileReference section */
 		0435E4931AFF80A700AA09E6 /* Visitor.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Visitor.xib; sourceTree = "<group>"; };
+		043F15891B0DBDD6003411FD /* HomeRefresh.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeRefresh.xib; sourceTree = "<group>"; };
+		043F158D1B0DBEA4003411FD /* HomeRefresh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRefresh.swift; sourceTree = "<group>"; };
 		044F5FC21AFF965D00BC0FEB /* MainTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBar.swift; sourceTree = "<group>"; };
 		044F5FC41AFF976400BC0FEB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		045856341B09A3CD003C1F29 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -125,6 +129,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		043F15881B0DBD9B003411FD /* HomeRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				043F15891B0DBDD6003411FD /* HomeRefresh.xib */,
+				043F158D1B0DBEA4003411FD /* HomeRefresh.swift */,
+			);
+			name = HomeRefresh;
+			sourceTree = "<group>";
+		};
 		047C4E9D1B04F4F90069A218 /* popup */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,6 +249,7 @@
 		04D5357A1AFF51000069ED81 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				043F15881B0DBD9B003411FD /* HomeRefresh */,
 				04D907C41B05FF420014B3CF /* QRCode */,
 				047C4EA41B04F7F40069A218 /* popupConller */,
 				047C4E9D1B04F4F90069A218 /* popup */,
@@ -429,6 +443,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				043F158A1B0DBDD6003411FD /* HomeRefresh.xib in Resources */,
 				048C38741B0240BC00CAFB78 /* OAuth.storyboard in Resources */,
 				044F5FC51AFF976400BC0FEB /* Main.storyboard in Resources */,
 				04D5355F1AFF50DF0069ED81 /* Images.xcassets in Resources */,
@@ -520,6 +535,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				043F158E1B0DBEA4003411FD /* HomeRefresh.swift in Sources */,
 				044F5FC31AFF965D00BC0FEB /* MainTabBar.swift in Sources */,
 				047C4EA21B04F5340069A218 /* PopoverPresentationController.swift in Sources */,
 				047C4EA91B04F84D0069A218 /* PopupTableViewController.swift in Sources */,

@@ -21,10 +21,10 @@ class Status: NSObject {
     /// 配图数组
     var pic_urls : [[String:String]]? {
         didSet{
-        imageURLs = [NSURL]()
-        for dic in self.pic_urls! {
-            var url = NSURL(string: dic["thumbnail_pic"]!)
-            imageURLs?.append(url!)
+            imageURLs = [NSURL]()
+            for dic in self.pic_urls! {
+                var url = NSURL(string: dic["thumbnail_pic"]!)
+                imageURLs?.append(url!)
             }
         }
     }
@@ -53,7 +53,7 @@ class Status: NSObject {
     
     /// 转发微博记录
     var retweeted_status : Status?
-     ///  属性数组
+    ///  属性数组
     private static let properties = ["created_at","id","text","sources","pic_urls","reposts_count","comments_count","attitudes_count"]
     
     init(dic : [String: AnyObject]) {
@@ -71,25 +71,28 @@ class Status: NSObject {
             retweeted_status = Status(dic: dic["retweeted_status"] as! [String : AnyObject] )
         }
     }
-    class func loadStatus(complete : (Status:[Status]?)->()){
-        let parame =  ["access_token":sharedUserAccount!.access_token]
-      
-       NetWorkingTools.requestJSON(.GET, WB_HOME_LINE_URL, parame) { (JSON) -> () in
-        
-       if let array = (JSON as! NSDictionary)["statuses"] as? [[String :AnyObject]] {
-            let result = self.statuses(array)
-        self.cacheStatusImage(result, complete: complete)
-        return
+    class func loadStatus(#since_id : Int,complete : (Status:[Status]?)->()){
+        var parame =  ["access_token":sharedUserAccount!.access_token]
+        // 添加since_id
+        if since_id > 0 {
+        parame["since_id"] = "\(since_id)"
         }
-        complete(Status: nil)
-        
+        NetWorkingTools.requestJSON(.GET, WB_HOME_LINE_URL, parame) { (JSON) -> () in
+            
+            if let array = (JSON as! NSDictionary)["statuses"] as? [[String :AnyObject]] {
+                let result = self.statuses(array)
+                self.cacheStatusImage(result, complete: complete)
+                return
+            }
+            complete(Status: nil)
+            
         }
     }
     ///  缓存图片
     private class func cacheStatusImage(status : [Status]?,complete :(status: [Status]?)->()) {
-        if status?.count == 0 {
+        if status == nil {
             complete(status: nil)
-            return
+            return 
         }
         
         // 简历一个dispatch_group, 监听一组异步任务完成后,同意得到通知
@@ -100,7 +103,7 @@ class Status: NSObject {
             }
             // 到这一定有图片,所以保存图片
             for url in s.pictureURLs!{
-              dispatch_group_enter(group)
+                dispatch_group_enter(group)
                 NSHomeDirectory()
                 
                 SDWebImageManager.sharedManager().downloadImageWithURL(url, options: nil, progress: nil, completed: { (_, _, _, _, _) -> Void in
@@ -110,16 +113,12 @@ class Status: NSObject {
                 })
             }
         }
-       dispatch_group_notify(group, dispatch_get_main_queue(), { () -> Void in
-       // println("图片缓存完成+加载数据 \(NSHomeDirectory())")
-        // 执行回调
-        complete(status: status)
+        dispatch_group_notify(group, dispatch_get_main_queue(), { () -> Void in
+            // println("图片缓存完成+加载数据 \(NSHomeDirectory())")
+            // 执行回调
+            complete(status: status)
         })
     }
-    
-    
-    
-    
     
     private class func statuses(array : [[String: AnyObject]]) -> [Status]?{
         if array.count == 0 {
