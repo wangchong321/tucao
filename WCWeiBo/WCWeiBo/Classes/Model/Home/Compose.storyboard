@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="JEu-yk-dZJ">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="lMd-bW-nHH">
+            <objects>
+                <navigationController id="JEu-yk-dZJ" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="xwy-Oy-RVO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="v1P-Jb-tUx" kind="relationship" relationship="rootViewController" id="aU9-VL-027"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t0S-w3-eNu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-273" y="500"/>
+        </scene>
+        <!--Compose View Controller-->
+        <scene sceneID="cLz-VJ-Jl4">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="v1P-Jb-tUx" customClass="ComposeViewController" customModule="WCWeiBo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="wl8-oR-IlG"/>
+                        <viewControllerLayoutGuide type="bottom" id="8df-J1-55f"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cXc-oa-xKg">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zQL-R4-H9X">
+                                <rect key="frame" x="0.0" y="64" width="600" height="228"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="v1P-Jb-tUx" id="fCH-lT-khn"/>
+                                </connections>
+                            </textView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cbv-iZ-0Tr">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <color key="backgroundColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="LW6-Cv-N1m"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem style="plain" id="Aj2-FE-7mn">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JAi-Pz-mm0">
+                                            <rect key="frame" x="16" y="7" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" backgroundImage="compose_toolbar_picture">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <state key="highlighted" backgroundImage="compose_toolbar_picture_highlighted"/>
+                                            <connections>
+                                                <action selector="seletcPicture" destination="v1P-Jb-tUx" eventType="touchUpInside" id="vyM-Ve-Oog"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="OYN-X4-4i0"/>
+                                    <barButtonItem style="plain" id="erQ-Gp-i3s">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="C5Z-GJ-tCz">
+                                            <rect key="frame" x="16" y="7" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" backgroundImage="compose_mentionbutton_background">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <state key="highlighted" backgroundImage="compose_mentionbutton_background_highlighted"/>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="pmJ-Fi-Lnr"/>
+                                    <barButtonItem style="plain" id="U9D-t6-G3O">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="sEk-YV-7GH">
+                                            <rect key="frame" x="16" y="7" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" backgroundImage="compose_trendbutton_background">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <state key="highlighted" backgroundImage="compose_trendbutton_background_highlighted"/>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="wzw-6H-tTc"/>
+                                    <barButtonItem style="plain" id="G0u-6M-nTq">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="TMx-kx-SrS">
+                                            <rect key="frame" x="16" y="7" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" backgroundImage="compose_emoticonbutton_background">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <state key="highlighted" backgroundImage="compose_emoticonbutton_background_highlighted"/>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Lhp-PL-ua1"/>
+                                    <barButtonItem style="plain" id="bqH-ej-MHF">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="P2p-ua-HT4">
+                                            <rect key="frame" x="16" y="7" width="30" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.83529411764705885" green="0.83529411764705885" blue="0.83529411764705885" alpha="1" colorSpace="calibratedRGB"/>
+                                            <state key="normal" backgroundImage="compose_addbutton_background">
+                                                <color key="titleShadowColor" red="0.83529411764705885" green="0.83529411764705885" blue="0.83529411764705885" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <state key="highlighted" backgroundImage="compose_addbutton_background_highlighted"/>
+                                        </button>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" red="0.90196078431372551" green="0.90196078431372551" blue="0.90196078431372551" alpha="1" colorSpace="calibratedRGB"/>
+                            </toolbar>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3XQ-0U-HkA">
+                                <rect key="frame" x="0.0" y="292" width="600" height="264"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="264" id="5Kf-KD-QEr"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="oyN-YZ-oaE" kind="embed" id="17s-Br-rz8"/>
+                                </connections>
+                            </containerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aix-aF-Krh">
+                                <rect key="frame" x="16" y="262" width="30" height="30"/>
+                                <state key="normal" title="位置">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oQt-AM-mcb">
+                                <rect key="frame" x="554" y="262" width="30" height="30"/>
+                                <state key="normal" title="公开">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请输入内容..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o3p-4Z-FjF">
+                                <rect key="frame" x="5" y="72" width="88" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Cbv-iZ-0Tr" firstAttribute="top" secondItem="3XQ-0U-HkA" secondAttribute="bottom" id="2nx-lt-74M"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="oQt-AM-mcb" secondAttribute="trailing" id="350-dw-fAV"/>
+                            <constraint firstItem="3XQ-0U-HkA" firstAttribute="leading" secondItem="cXc-oa-xKg" secondAttribute="leading" id="4f3-fb-LHM"/>
+                            <constraint firstItem="o3p-4Z-FjF" firstAttribute="leading" secondItem="cXc-oa-xKg" secondAttribute="leading" constant="5" id="4fe-mv-3Wd"/>
+                            <constraint firstItem="o3p-4Z-FjF" firstAttribute="top" secondItem="wl8-oR-IlG" secondAttribute="bottom" constant="8" id="5bW-DD-RQ1"/>
+                            <constraint firstItem="8df-J1-55f" firstAttribute="top" secondItem="Cbv-iZ-0Tr" secondAttribute="bottom" id="Bpv-mW-R7O"/>
+                            <constraint firstItem="3XQ-0U-HkA" firstAttribute="top" secondItem="aix-aF-Krh" secondAttribute="bottom" id="CCT-DJ-wzN"/>
+                            <constraint firstItem="3XQ-0U-HkA" firstAttribute="top" secondItem="zQL-R4-H9X" secondAttribute="bottom" id="OGU-QH-mUn"/>
+                            <constraint firstItem="Cbv-iZ-0Tr" firstAttribute="leading" secondItem="cXc-oa-xKg" secondAttribute="leadingMargin" constant="-16" id="Ove-oa-KvJ"/>
+                            <constraint firstItem="aix-aF-Krh" firstAttribute="leading" secondItem="cXc-oa-xKg" secondAttribute="leadingMargin" id="Sii-Ag-YMV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Cbv-iZ-0Tr" secondAttribute="trailing" constant="-16" id="avs-wx-L5N"/>
+                            <constraint firstAttribute="trailing" secondItem="3XQ-0U-HkA" secondAttribute="trailing" id="kKR-eA-mUk"/>
+                            <constraint firstItem="zQL-R4-H9X" firstAttribute="leading" secondItem="cXc-oa-xKg" secondAttribute="leadingMargin" constant="-16" id="lC5-RE-pMy"/>
+                            <constraint firstItem="3XQ-0U-HkA" firstAttribute="top" secondItem="oQt-AM-mcb" secondAttribute="bottom" id="tQZ-6z-kuy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="zQL-R4-H9X" secondAttribute="trailing" constant="-16" id="vNK-aZ-wWo"/>
+                            <constraint firstItem="zQL-R4-H9X" firstAttribute="top" secondItem="wl8-oR-IlG" secondAttribute="bottom" id="vlM-ru-dTZ"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="sGB-oH-6w2">
+                        <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" title="取消" id="e6K-MD-8Pb">
+                            <connections>
+                                <action selector="dismsClick:" destination="v1P-Jb-tUx" id="zG0-f2-C5b"/>
+                            </connections>
+                        </barButtonItem>
+                        <view key="titleView" contentMode="scaleToFill" id="xEC-g6-Y4A">
+                            <rect key="frame" x="180" y="6" width="240" height="33"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="发微博" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHW-Jg-LDv">
+                                    <rect key="frame" x="98" y="0.0" width="45" height="18"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rNg-m5-C0c">
+                                    <rect key="frame" x="104" y="17" width="33" height="16"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="yHW-Jg-LDv" firstAttribute="top" secondItem="xEC-g6-Y4A" secondAttribute="top" id="Jiz-Lc-jSN"/>
+                                <constraint firstItem="rNg-m5-C0c" firstAttribute="top" secondItem="yHW-Jg-LDv" secondAttribute="bottom" constant="-1" id="Xp6-oA-jum"/>
+                                <constraint firstAttribute="centerX" secondItem="rNg-m5-C0c" secondAttribute="centerX" id="ZIM-EO-CVI"/>
+                                <constraint firstAttribute="centerX" secondItem="yHW-Jg-LDv" secondAttribute="centerX" id="jB5-1N-Wg2"/>
+                            </constraints>
+                        </view>
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="发送" id="gMp-Lw-zlK">
+                            <connections>
+                                <action selector="sendClick:" destination="v1P-Jb-tUx" id="U1p-UJ-6mo"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="nameLabel" destination="rNg-m5-C0c" id="Rtp-lF-i5e"/>
+                        <outlet property="pictureCollectionViewHeight" destination="5Kf-KD-QEr" id="62t-Uc-jx8"/>
+                        <outlet property="sendBtn" destination="gMp-Lw-zlK" id="JOe-2j-Idk"/>
+                        <outlet property="textLabel" destination="o3p-4Z-FjF" id="Eyp-0g-3T5"/>
+                        <outlet property="textView" destination="zQL-R4-H9X" id="yd2-9P-swH"/>
+                        <outlet property="toolBarHeightConstrain" destination="Bpv-mW-R7O" id="nhT-Kx-FrK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hjq-AF-gbU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="465" y="495"/>
+        </scene>
+        <!--Picture Select Collection View Controller-->
+        <scene sceneID="FqZ-ud-bOa">
+            <objects>
+                <collectionViewController id="oyN-YZ-oaE" customClass="PictureSelectCollectionViewController" customModule="WCWeiBo" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="FEY-zl-5Vj">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="264"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="866-pO-In0">
+                            <size key="itemSize" width="123" height="120"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Lbu-au-AIl">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GeD-Ke-3FH">
+                                            <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                            <state key="normal" backgroundImage="compose_pic_add">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qHh-cW-VbH">
+                                            <rect key="frame" x="46" y="0.0" width="24" height="24"/>
+                                            <state key="normal" backgroundImage="compose_photo_close">
+                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="GeD-Ke-3FH" firstAttribute="leading" secondItem="Lbu-au-AIl" secondAttribute="leading" id="2xW-JM-IGo"/>
+                                    <constraint firstAttribute="trailing" secondItem="GeD-Ke-3FH" secondAttribute="trailing" id="JfW-Lc-TS5"/>
+                                    <constraint firstItem="GeD-Ke-3FH" firstAttribute="top" secondItem="Lbu-au-AIl" secondAttribute="top" id="ba4-X9-7At"/>
+                                    <constraint firstAttribute="bottom" secondItem="GeD-Ke-3FH" secondAttribute="bottom" id="eGB-9U-mgg"/>
+                                </constraints>
+                                <size key="customSize" width="70" height="70"/>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="oyN-YZ-oaE" id="TyB-5U-qyQ"/>
+                            <outlet property="delegate" destination="oyN-YZ-oaE" id="QOz-ky-S5w"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="14G-1o-9y3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="465" y="1053"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="compose_addbutton_background" width="24" height="24"/>
+        <image name="compose_addbutton_background_highlighted" width="24" height="24"/>
+        <image name="compose_emoticonbutton_background" width="24" height="24"/>
+        <image name="compose_emoticonbutton_background_highlighted" width="24" height="24"/>
+        <image name="compose_mentionbutton_background" width="24" height="24"/>
+        <image name="compose_mentionbutton_background_highlighted" width="24" height="24"/>
+        <image name="compose_photo_close" width="24" height="24"/>
+        <image name="compose_pic_add" width="70" height="70"/>
+        <image name="compose_toolbar_picture" width="24" height="24"/>
+        <image name="compose_toolbar_picture_highlighted" width="24" height="24"/>
+        <image name="compose_trendbutton_background" width="24" height="24"/>
+        <image name="compose_trendbutton_background_highlighted" width="24" height="24"/>
+    </resources>
+</document>

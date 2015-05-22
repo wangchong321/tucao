@@ -18,9 +18,9 @@ class MainTabBarController: UITabBarController {
         addChildViewControllers()
         myTabBar.centerButton.addTarget(self, action: "centerbtnClick", forControlEvents: UIControlEvents.TouchUpInside)
     }
-///  点击中间按钮
+    ///  点击中间按钮
     func  centerbtnClick(){
-        println(__FUNCTION__)
+        presentViewController(WCSbController.sbController("Compose"), animated: true, completion: nil)
     }
     func  addChildViewControllers() {
        
