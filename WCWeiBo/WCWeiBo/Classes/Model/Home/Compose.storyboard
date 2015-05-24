@@ -33,7 +33,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zQL-R4-H9X">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zQL-R4-H9X">
                                 <rect key="frame" x="0.0" y="64" width="600" height="228"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -93,6 +93,9 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <state key="highlighted" backgroundImage="compose_emoticonbutton_background_highlighted"/>
+                                            <connections>
+                                                <action selector="headImgClick" destination="v1P-Jb-tUx" eventType="touchUpInside" id="LcU-kY-qlX"/>
+                                            </connections>
                                         </button>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Lhp-PL-ua1"/>
@@ -172,13 +175,13 @@
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="发微博" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yHW-Jg-LDv">
                                     <rect key="frame" x="98" y="0.0" width="45" height="18"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rNg-m5-C0c">
                                     <rect key="frame" x="104" y="17" width="33" height="16"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
@@ -217,13 +220,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="264"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="866-pO-In0">
-                            <size key="itemSize" width="123" height="120"/>
+                            <size key="itemSize" width="70" height="70"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="sectionInset" minX="10" minY="10" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Lbu-au-AIl">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PictureCollectionCell" id="Lbu-au-AIl" customClass="PictureCollectionViewCell" customModule="WCWeiBo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -235,12 +238,22 @@
                                             <state key="normal" backgroundImage="compose_pic_add">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="pictureBtnClick" destination="Lbu-au-AIl" eventType="touchUpInside" id="B4l-bf-6ER"/>
+                                            </connections>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qHh-cW-VbH">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qHh-cW-VbH">
                                             <rect key="frame" x="46" y="0.0" width="24" height="24"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="24" id="M5L-hN-RZP"/>
+                                                <constraint firstAttribute="width" constant="24" id="bE1-Xz-iNd"/>
+                                            </constraints>
                                             <state key="normal" backgroundImage="compose_photo_close">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="removeBtnClick" destination="Lbu-au-AIl" eventType="touchUpInside" id="Scq-qU-f4A"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -248,10 +261,16 @@
                                 <constraints>
                                     <constraint firstItem="GeD-Ke-3FH" firstAttribute="leading" secondItem="Lbu-au-AIl" secondAttribute="leading" id="2xW-JM-IGo"/>
                                     <constraint firstAttribute="trailing" secondItem="GeD-Ke-3FH" secondAttribute="trailing" id="JfW-Lc-TS5"/>
+                                    <constraint firstItem="qHh-cW-VbH" firstAttribute="top" secondItem="Lbu-au-AIl" secondAttribute="top" id="Lm4-YL-3jf"/>
+                                    <constraint firstAttribute="trailing" secondItem="qHh-cW-VbH" secondAttribute="trailing" id="MQC-Oa-IKT"/>
                                     <constraint firstItem="GeD-Ke-3FH" firstAttribute="top" secondItem="Lbu-au-AIl" secondAttribute="top" id="ba4-X9-7At"/>
                                     <constraint firstAttribute="bottom" secondItem="GeD-Ke-3FH" secondAttribute="bottom" id="eGB-9U-mgg"/>
                                 </constraints>
                                 <size key="customSize" width="70" height="70"/>
+                                <connections>
+                                    <outlet property="pictureBtn" destination="GeD-Ke-3FH" id="C1W-1P-Ozi"/>
+                                    <outlet property="removeBtn" destination="qHh-cW-VbH" id="nBA-GL-T7A"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>

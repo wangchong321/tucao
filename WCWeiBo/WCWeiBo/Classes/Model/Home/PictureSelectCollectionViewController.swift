@@ -8,84 +8,70 @@
 
 import UIKit
 
-let reuseIdentifier = "Cell"
-
 class PictureSelectCollectionViewController: UICollectionViewController {
-
+    var pictureList = [UIImage]()
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        regNotificiton()
     
-        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
+        }
+    // 注册通知
+    private func regNotificiton(){
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "selectPicture:", name:WCSelectPictureNotifiction , object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "removePicture:", name: WCRemoviPictureNotifiction, object: nil)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    func selectPicture(notifiction : NSNotification) {
+    
+        // 如果已经有图片了,就返回
+        let cell = notifiction.object as! PictureCollectionViewCell
+        if cell.image != nil {
+            println("已经有图片了")
+            return
+        }
+        // 点击图片按钮的时候要进入到系统的图片中
+        // 如果不支持图片相册,返回
+        if !UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
+            println("不支持相册")
+            return
+        }
+        let picter =  UIImagePickerController()
+        picter.delegate = self
+        picter.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum
+        picter.allowsEditing = true
+        presentViewController(picter, animated: true, completion: nil)
     }
-    */
-
-    // MARK: UICollectionViewDataSource
-
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        //#warning Incomplete method implementation -- Return the number of sections
-        return 0
+    func removePicture(notifiction : NSNotification) {
+        let cell = notifiction.object as! PictureCollectionViewCell
+        if let indexP = collectionView?.indexPathForCell(cell){
+            pictureList.removeAtIndex(indexP.item)
+            collectionView?.reloadData()
+        }
+        
     }
-
-
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //#warning Incomplete method implementation -- Return the number of items in the section
-        return 0
+     
+        return pictureList.count + 1
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
-    
-        // Configure the cell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PictureCollectionCell", forIndexPath: indexPath) as! PictureCollectionViewCell
+        if indexPath.item < pictureList.count{
+        cell.image = pictureList[indexPath.item]
+        }else{
+            cell.image = nil
+        }
     
         return cell
     }
 
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
+ }
+extension PictureSelectCollectionViewController : UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+        pictureList.append(image.scaleImage(width: 320))
+        collectionView?.reloadData()
+        dismissViewControllerAnimated(true, completion: nil)
     }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-    
-    }
-    */
-
 }

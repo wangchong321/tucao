@@ -15,8 +15,8 @@ class NetWorkingTools: NSObject {
         Alamofire.request(method, urlString, parameters: parame).responseJSON() { (_, _, JSON, error) -> Void in
             if error != nil || JSON == nil {
                 // 查看程序的错误
-                println("error:JSON"+"\(JSON)"+"ERROR:NetWorkingTools "+"\(error)")
-                completion(JSON : nil)
+                println("error:JSON-----"+"\(JSON)"+"ERROR:NetWorkingTools "+"\(error)")
+                //completion(JSON : nil)
                 SVProgressHUD.showInfoWithStatus("你的网路不给力")
                 return
             }
