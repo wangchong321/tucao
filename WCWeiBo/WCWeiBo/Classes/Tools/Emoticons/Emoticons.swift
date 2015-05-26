@@ -37,10 +37,10 @@ class Emoticons: NSObject {
     
     init(groupName: String, groupPath: String, dict:[String: String]?) {
         super.init()
-        
+
         emoticon_group_name = groupName
         emoticon_group_path = groupPath
-        
+
         chs = dict?["chs"]
         png = dict?["png"]
         code = dict?["code"]
@@ -57,8 +57,56 @@ class Emoticons: NSObject {
         }
     }
     
+    /// 定义一个静态的数组，记录表情文字
+    /// 优化性能，避免重复加载数组
+    static let emoticonsArray = Emoticons.emoticonsList()
+    
+    /// 将带表情符号的字符串，生成带图片的属性字符串
+    class func emoticonString(string: String, lineHeight: CGFloat) -> NSAttributedString {
+    
+        // 利用正则表达式过滤表情符号
+        // 1. 匹配方案，注意：[] 是正则表达式中的保留字，不能直接使用，如果要用，需要使用 \\ 转义
+        // 因为 [] 是表情符号的一个标记
+        let pattern = "\\[(.*?)\\]"
+        
+        // 2. 正则表达式
+        let regex = NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.DotMatchesLineSeparators, error: nil)
+        
+        // 3. 开始多个匹配
+        // 3.1 根据字符串创建完整的可变属性文本
+        var strM = NSMutableAttributedString(string: string)
+        
+        // 判断是否找到匹配项
+        if let results = regex?.matchesInString(string, options: NSMatchingOptions(0), range: NSMakeRange(0, count(string))) {
+            
+            // 遍历匹配的结果
+            var index = results.count - 1
+            while index >= 0 {
+                let r = results[index--] as! NSTextCheckingResult
+                
+                let range = r.rangeAtIndex(0)
+                let emoticonStr = (string as NSString).substringWithRange(range)
+                
+                // 使用表情符号过滤出表情对象
+                let emoticon = Emoticons.emoticonsArray.filter { $0.chs == emoticonStr }.last
+                
+                // 判断是否找到表情对象
+                if emoticon != nil {
+                    // 生成表情属性字符串
+                    let attrString = EmoticonsAttachment.emoticonString(emoticon!, height: lineHeight)
+                    
+                    // 替换可变字符串
+                    strM.replaceCharactersInRange(range, withAttributedString: attrString)
+                }
+            }
+        }
+        
+        // 所有的结果就完成了
+        return strM
+    }
+    
     /// 返回所有的表情符号数组
-    class func emoticonsList() -> [Emoticons] {
+    private class func emoticonsList() -> [Emoticons] {
     
         var list = [Emoticons]()
         

@@ -19,10 +19,7 @@ class EmoticonKeyboardViewController: UIViewController {
 
     /// 选中表情回调闭包
     var selectedEmoticon: ((emoticon: Emoticons)->())?
-    init() {
-        super.init(nibName: nil, bundle: nil)
-        println("===============================")
-    }
+    
     /// 实例化键盘控制器，并且指定选中表情的回调
     init(selectedEmoticon: (emoticon: Emoticons)->()) {
         super.init(nibName: nil, bundle: nil)
@@ -40,9 +37,7 @@ class EmoticonKeyboardViewController: UIViewController {
     }
     
     /// 表情数组
-    lazy var emoticonsList: [Emoticons] = {
-        return Emoticons.emoticonsList()
-    }()
+    lazy var emoticonsList: [Emoticons] = Emoticons.emoticonsArray
     
     lazy var toolBar: UIToolbar = {
        

@@ -8,6 +8,11 @@
 
 import UIKit
 import SDWebImage
+
+protocol StatusCellDelegate {
+    func statusCellDidSelectPicture(statusCell : StatusCell, indexPathInt : Int )
+}
+
 class StatusCell: UITableViewCell {
     /// 头像
     @IBOutlet weak var iconVIew: UIImageView!
