@@ -37,10 +37,10 @@ class Emoticons: NSObject {
     
     init(groupName: String, groupPath: String, dict:[String: String]?) {
         super.init()
-
+        
         emoticon_group_name = groupName
         emoticon_group_path = groupPath
-
+        
         chs = dict?["chs"]
         png = dict?["png"]
         code = dict?["code"]

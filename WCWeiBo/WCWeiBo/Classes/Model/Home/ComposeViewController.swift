@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ComposeViewController: UIViewController {
+class ComposeViewController: UIViewController ,UITextViewDelegate {
 //    lazy var keyboadVC: EmoticonKeyboardViewController = {
 //        // 闭包中会对 self 强引用
 //        weak var weakSelf = self
@@ -18,7 +18,9 @@ class ComposeViewController: UIViewController {
 //        })
 //        }()
     /// 输入的textView文本框
-    @IBOutlet weak var textView: UITextView!
+    private let maxTextViewLength = 10
+
+    @IBOutlet weak var textView: EmoticonsTextView!
     /// 模仿Placeholder 的labe
     @IBOutlet weak var textLabel: UILabel!
     /// 姓名
@@ -36,8 +38,20 @@ class ComposeViewController: UIViewController {
         sendStatus()
     }
     ///  点击头像按钮
+    
+    lazy var keyboadVC: EmoticonKeyboardViewController = {
+        // 闭包中会对 self 强引用
+        weak var weakSelf = self
+        //var vc = EmoticonKeyboardViewController()
+        var vc = EmoticonKeyboardViewController(selectedEmoticon: { (emoticon) -> () in
+            weakSelf?.textView.insertEmoticon(emoticon)
+        })
+        return vc
+        
+        }()
+    
     @IBAction func headImgClick() {
-        // 点击按钮的时候弹出已经改变后的键盘
+        println("点击了头像")
         // 查看之前的键盘，如果是 nil，表示当前键盘是系统键盘
         println(textView.inputView)
         
@@ -49,19 +63,7 @@ class ComposeViewController: UIViewController {
         
         // 重新激活键盘
         textView.becomeFirstResponder()
-    
-        //textView.inputView = EmoticonKeyboardViewController()
     }
-    // 控制器对 keyboardVC 是强引用
-//    lazy var keyboadVC: EmoticonKeyboardViewController = {
-//        // 闭包中会对 self 强引用
-//        weak var weakSelf = self
-//        return EmoticonKeyboardViewController(selectedEmoticon: { (emoticon) -> () in
-//            // 调用方法，同样会产生强引用，在 OC 中同样需要注意
-//            weakSelf?.textView.insertEmoticon(emoticon)
-//        })
-//        }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         pictureCollectionViewHeight.constant = 0
@@ -77,6 +79,7 @@ class ComposeViewController: UIViewController {
         
     }
     private func setuoUI(){
+        addChildViewController(keyboadVC)
         // 添加自控制器
 //        for vc in childViewControllers {
 //            if vc is PictureSelectCollectionViewController {
@@ -109,12 +112,14 @@ class ComposeViewController: UIViewController {
         if notification.name == UIKeyboardWillChangeFrameNotification {
             var rect = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
             height = rect.height
-        }
-        UIView.animateWithDuration(duration, animations: { () -> Void in
-            
+            UIView.animateWithDuration(duration, animations: { () -> Void in
+                
+                self.toolBarHeightConstrain.constant = height
+                self.view.layoutIfNeeded()
+            })
+        }else {
             self.toolBarHeightConstrain.constant = height
-            self.view.layoutIfNeeded()
-        })
+        }
         
     }
     
@@ -139,18 +144,18 @@ class ComposeViewController: UIViewController {
         NetWorkingTools.requestJSON(.POST, urlString, parame) { (JSON) -> () in
           
             self.dismissViewControllerAnimated(true, completion: nil)
+            
         }
     }
 }
 
-private let maxTextViewLength = 10
 extension ComposeViewController : UITextViewDelegate {
 
     func textViewDidChange(textView: UITextView) {
         // println("\(textView.text)")
         // textView.text如果是空的就不隐藏.否则隐藏
-        textLabel.hidden = !textView.text.isEmpty
-        sendBtn.enabled = !textView.text.isEmpty
+        textLabel.hidden = self.textView.hasText()
+        sendBtn.enabled = textView.hasText()
         var text = textView.text as NSString
         if text.length > maxTextViewLength{
             textView.text = text.substringToIndex(maxTextViewLength)

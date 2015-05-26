@@ -8,11 +8,12 @@
 
 import UIKit
 
-class HomeTableViewController: BascTableViewController {
+class HomeTableViewController: BascTableViewController,UIScrollViewDelegate {
     @IBOutlet weak var titleBtn: WCTittleButton!
     /// 行高缓存
     var rowHeightCache = NSCache()
-    
+    // 记录上一次滚动的位置
+    var lasecontenoffset :CGFloat = 0
     @IBAction func friendsearchClick() {
         println(__FUNCTION__)
     }
@@ -159,5 +160,36 @@ class HomeTableViewController: BascTableViewController {
         rowHeightCache.setObject(h, forKey: status.id)
         
         return h
+    }
+    
+}
+extension HomeTableViewController: UIScrollViewDelegate{
+    
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        if scrollView.contentOffset.y < 60 {
+            return
+        }
+        var s = scrollView.contentOffset.y - lasecontenoffset
+        if s > 0 {
+            // 到这里要隐藏itembar
+            
+            // 执行动画隐藏
+            UIView.animateWithDuration(1.0, animations: { () -> Void in
+                
+                navigationController?.navigationBar.frame.origin.y = -44
+            })
+            
+        }else{
+            UIView.animateWithDuration(1.0, animations: { () -> Void in
+                
+                navigationController?.navigationBar.frame.origin.y = 20
+                
+            })
+            
+        }
+        // 记录上一次
+        lasecontenoffset = scrollView.contentOffset.y
+        
     }
 }
