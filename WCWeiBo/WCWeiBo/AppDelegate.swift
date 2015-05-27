@@ -8,6 +8,7 @@
 
 import UIKit
 import SVProgressHUD
+import AFNetworking
 var sharedUserAccount = UserAccount.loadUserAccount()
 let WCSwitchRootViewControllerNotification = "WCSwitchRootViewControllerNotification"
 
@@ -16,6 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        // 1. 添加sqlite3
+        SQLiteManager.sharedSQLManager().openDB("db.sql")
+        // 2. 设置网络指示器
+        AFNetworkActivityIndicatorManager.sharedManager().enabled = true
         
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.makeKeyAndVisible()

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeTableViewController: BascTableViewController,UIScrollViewDelegate {
+class HomeTableViewController: BascTableViewController,UIScrollViewDelegate,StatusCellDelegate {
     @IBOutlet weak var titleBtn: WCTittleButton!
     /// 行高缓存
     var rowHeightCache = NSCache()
@@ -86,13 +86,22 @@ class HomeTableViewController: BascTableViewController,UIScrollViewDelegate {
         loadData()
     }
     
-    
+    var pullupRefrechFlag = false
     func loadData(){
         refreshControl?.beginRefreshing()
+        // 如果是下拉刷新
         var since_id = statuses?.first?.id ?? 0
-        Status.loadStatus(since_id: since_id) { (Status) -> () in
+        var max_id = 0
+        // 如果是上啦刷新
+        if pullupRefrechFlag {
             
-            if Status == nil {
+            since_id = 0
+            max_id = statuses?.last?.id ?? 0
+        }
+        
+        Status.loadStatus(since_id: since_id , max_id : max_id) { (statuses) -> () in
+            
+            if statuses == nil {
                 println("没有新数据")
                 let time = 2.0
                 let time_t = dispatch_time(DISPATCH_TIME_NOW, (Int64)(time * (Double)(NSEC_PER_SEC)))
@@ -100,17 +109,24 @@ class HomeTableViewController: BascTableViewController,UIScrollViewDelegate {
                     
                     self.refreshControl?.endRefreshing()
                 })
-
+                
                 return
             }
             if since_id > 0 {
-                self.statuses = Status! + self.statuses!
+                self.statuses = statuses! + self.statuses!
+            }else if max_id > 0 {
+                
+                println(statuses?.count)
+                 println(self.statuses?.count)
+                self.statuses! += statuses!
+                println(self.statuses?.count)
+                self.pullupRefrechFlag = false
+                println("上拉刷新完成")
+                return
             }
-            self.statuses = Status
+            self.statuses = statuses
         }
     }
-    
-    
     
     // 设置首页中间标题按钮
     private func setTitleLabel(){
@@ -125,10 +141,6 @@ class HomeTableViewController: BascTableViewController,UIScrollViewDelegate {
         super.viewWillAppear(animated)
         vieitorView?.setNoLoginImge("visitordiscover_feed_image_house", title: "登录后，最新、最热微博尽在掌握，不再会与实事潮流擦肩而过", isHome: true)
     }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     // MARK: - Table view data source
     
@@ -139,6 +151,12 @@ class HomeTableViewController: BascTableViewController,UIScrollViewDelegate {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(StatusCell.identifi(statuses![indexPath.row])) as! StatusCell
         cell.status = statuses![indexPath.row]
+        cell.pictureDelegate = self
+        // 如果是最后一个则是下拉刷新 并且第一次进
+        if indexPath.row == (statuses!.count - 1) && !pullupRefrechFlag {
+            pullupRefrechFlag = true
+            loadData()
+        }
         return cell
         
     }
@@ -161,9 +179,13 @@ class HomeTableViewController: BascTableViewController,UIScrollViewDelegate {
         
         return h
     }
-    
+    // MARK - statusCell的代理方法
+    func statusCellDidSelectPicture(statusCell: StatusCell, indexPathInt: Int) {
+        println(indexPathInt)
+        
+    }
 }
-extension HomeTableViewController: UIScrollViewDelegate{
+extension HomeTableViewController: UIScrollViewDelegate {
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         

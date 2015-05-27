@@ -10,9 +10,9 @@ import UIKit
 import Alamofire
 import SVProgressHUD
 class OAuthViewController: UIViewController, UIWebViewDelegate {
-    let WB_Client_Id = "1314580718"
-    let WB_Redirect_Uri = "http://www.tucao.cc"
-    let WB_Client_Secret = "60e4d6ee7f70e32fc42cb967b8957971"
+    let WB_Client_Id = "284115638"
+    let WB_Redirect_Uri = "http://www.baidu.com"
+    let WB_Client_Secret = "d79134d8bf979346c62b8d6def6b42a2"
     @IBAction func close() {
         dismissViewControllerAnimated(true, completion: nil)
         SVProgressHUD.dismiss()

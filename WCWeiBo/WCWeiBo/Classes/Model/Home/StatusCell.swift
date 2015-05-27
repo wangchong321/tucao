@@ -36,11 +36,11 @@ class StatusCell: UITableViewCell {
     @IBOutlet weak var bottomVIew: UIView!
     /// 转发文本
     @IBOutlet weak var retweetedLabel: UILabel!
-    
+    var pictureDelegate : StatusCellDelegate?
     var status : Status?{
         didSet{
             authorLabel.text = status?.user?.name
-            createdLabel.text = status?.created_at
+            createdLabel.text = status?.createdDate?.fullDescription() ?? ""
             sourceLabel.text = status?.sources
             contentLabele.text = status?.text
             iconVIew.sd_setImageWithURL(status?.user?.iconUrl)
@@ -110,7 +110,12 @@ private func calcPictureViewSize(status : Status) -> (viewSize : CGSize, itemSiz
 }
 
 
-extension StatusCell : UICollectionViewDataSource {
+extension StatusCell : UICollectionViewDataSource ,UICollectionViewDelegate{
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        pictureDelegate?.statusCellDidSelectPicture(self, indexPathInt: indexPath.item)
+        
+    }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return status?.pictureURLs?.count ?? 0
