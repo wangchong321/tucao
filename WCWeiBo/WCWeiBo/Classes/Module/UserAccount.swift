@@ -45,7 +45,6 @@ class UserAccount: NSObject, NSCoding {
             // 1已经获取了token 转换成字典下一步要把token保存起来
             let account = UserAccount(dic: JSON as![String:AnyObject])
             account.loadFullUserAccount(comletion)
-            
         }
     }  ///  发送token从服务器获取用户信息
     func loadFullUserAccount(completion:(account: UserAccount?)->()){

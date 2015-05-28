@@ -9,7 +9,7 @@
 import UIKit
 import SDWebImage
 private let WB_HOME_LINE_URL = "https://api.weibo.com/2/statuses/home_timeline.json"
-class Status: NSObject {
+class Status: NSObject, Printable {
     //// 创建微博的时间
     var created_at : String?{
         didSet{
@@ -23,7 +23,7 @@ class Status: NSObject {
     /// 微博信息内容
     var text : String?
     /// 微博来源
-    var sources : String?
+    var source : String?
     /// 配图数组
     var pic_urls : [[String:String]]? {
         didSet{
@@ -45,7 +45,7 @@ class Status: NSObject {
             return imageURLs
         }
     }
-    
+   
     
     /// 转发数
     var reposts_count: Int = 0
@@ -60,7 +60,7 @@ class Status: NSObject {
     /// 转发微博记录
     var retweeted_status : Status?
     ///  属性数组
-    private static let properties = ["created_at","id","text","sources","pic_urls","reposts_count","comments_count","attitudes_count"]
+    private static let properties = ["created_at","id","text","source","pic_urls","reposts_count","comments_count","attitudes_count"]
     
     init(dic : [String: AnyObject]) {
         super.init()
@@ -81,23 +81,12 @@ class Status: NSObject {
     /// 设置刷新数据
     class func loadStatus(#since_id : Int, max_id: Int, complete : (statuses:[Status]?)->()){
         var parame =  ["access_token":sharedUserAccount!.access_token]
-        
-        // 添加since_id
-        if since_id > 0 {
-            parame["since_id"] = "\(since_id)"
-        }else if max_id > 0 {
-            parame["max_id"] = "\(max_id)"
-        }
-        
-        NetWorkingTools.requestJSON(.GET, WB_HOME_LINE_URL, parame) { (JSON) -> () in
-            
-            if let array = (JSON as! NSDictionary)["statuses"] as? [[String :AnyObject]] {
-                let result = self.statuses(array)
+        StatusDAL.loadStatus(since_id: since_id, max_id: max_id) { (array) -> () in
+            if array != nil {
+                let result = self.statuses(array!)
                 self.cacheStatusImage(result, complete: complete)
-                return
             }
             complete(statuses: nil)
-            
         }
     }
     ///  缓存图片
@@ -144,4 +133,10 @@ class Status: NSObject {
         }
         return arrayM
     }
+    
+    override var description : String {
+        let properties = ["created_at","id","text","source","pic_urls","reposts_count","comments_count","attitudes_count"]
+        return "\(dictionaryWithValuesForKeys(properties))"
+    }
+    
 }

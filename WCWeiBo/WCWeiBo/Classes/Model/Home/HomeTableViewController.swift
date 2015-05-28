@@ -87,8 +87,12 @@ class HomeTableViewController: BascTableViewController,UIScrollViewDelegate,Stat
     }
     
     var pullupRefrechFlag = false
+    var firstLoad = true
     func loadData(){
+        // 如果是第一次登陆则加载已经缓存好的数据
+        if firstLoad {
         refreshControl?.beginRefreshing()
+        }
         // 如果是下拉刷新
         var since_id = statuses?.first?.id ?? 0
         var max_id = 0
@@ -115,16 +119,13 @@ class HomeTableViewController: BascTableViewController,UIScrollViewDelegate,Stat
             if since_id > 0 {
                 self.statuses = statuses! + self.statuses!
             }else if max_id > 0 {
-                
-                println(statuses?.count)
-                 println(self.statuses?.count)
                 self.statuses! += statuses!
-                println(self.statuses?.count)
                 self.pullupRefrechFlag = false
                 println("上拉刷新完成")
                 return
             }
             self.statuses = statuses
+            self.firstLoad = false
         }
     }
     

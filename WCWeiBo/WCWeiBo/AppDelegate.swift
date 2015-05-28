@@ -17,9 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
         // 1. 添加sqlite3
-        SQLiteManager.sharedSQLManager().openDB("db.sql")
+        SQLiteManager.sharedSQLManager().openDB("status.db")
         // 2. 设置网络指示器
         AFNetworkActivityIndicatorManager.sharedManager().enabled = true
         

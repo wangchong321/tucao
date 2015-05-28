@@ -41,7 +41,7 @@ class StatusCell: UITableViewCell {
         didSet{
             authorLabel.text = status?.user?.name
             createdLabel.text = status?.createdDate?.fullDescription() ?? ""
-            sourceLabel.text = status?.sources
+            sourceLabel.text = status?.source?.hrefLink()?.linkText ?? ""
             contentLabele.text = status?.text
             iconVIew.sd_setImageWithURL(status?.user?.iconUrl)
             let pSize = calcPictureViewSize(status!)

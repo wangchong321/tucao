@@ -69,11 +69,9 @@ class HomeRefresh: UIRefreshControl {
         }
 
         if self.frame.origin.y > -50 && shouTipFlag{
-            println("箭头该向下了")
             shouTipFlag = false
             refreshView?.rotateTipIcon(shouTipFlag)
         }else if self.frame.origin.y <= -50 &&  !shouTipFlag{
-        println("箭头该向上了")
         shouTipFlag = true
         refreshView?.rotateTipIcon(shouTipFlag)
        

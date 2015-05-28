@@ -46,7 +46,6 @@ class NetWorkingTools: AFHTTPSessionManager {
         if method == Method.GET {
             shardManager().GET(urlString, parameters: parame, success: { (_, JSON) -> Void in
                 completion(JSON: JSON)
-                
             }, failure: { (_, error) -> Void in
                 println("ERROR 网络工具类.GET : \(error)")
                 SVProgressHUD.showInfoWithStatus("您的网络不给力")
