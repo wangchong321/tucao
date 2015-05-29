@@ -96,6 +96,7 @@ class HomeTableViewController: BascTableViewController,UIScrollViewDelegate,Stat
         // 如果是下拉刷新
         var since_id = statuses?.first?.id ?? 0
         var max_id = 0
+        println(since_id)
         // 如果是上啦刷新
         if pullupRefrechFlag {
             
@@ -104,28 +105,26 @@ class HomeTableViewController: BascTableViewController,UIScrollViewDelegate,Stat
         }
         
         Status.loadStatus(since_id: since_id , max_id : max_id) { (statuses) -> () in
-            
             if statuses == nil {
                 println("没有新数据")
-                let time = 2.0
-                let time_t = dispatch_time(DISPATCH_TIME_NOW, (Int64)(time * (Double)(NSEC_PER_SEC)))
-                dispatch_after(time_t, dispatch_get_main_queue(), { () -> Void in
-                    
-                    self.refreshControl?.endRefreshing()
-                })
-                
+                self.refreshControl?.endRefreshing()
                 return
             }
+            
             if since_id > 0 {
+                println(statuses?.count)
+                println(self.statuses?.count)
+                println("下拉刷新完成3333333333333")
                 self.statuses = statuses! + self.statuses!
             }else if max_id > 0 {
+
                 self.statuses! += statuses!
                 self.pullupRefrechFlag = false
-                println("上拉刷新完成")
-                return
-            }
+                println("上拉刷新完成222222222222")
+            }else {
             self.statuses = statuses
             self.firstLoad = false
+            }
         }
     }
     

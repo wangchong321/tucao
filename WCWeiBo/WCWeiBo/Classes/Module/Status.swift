@@ -80,13 +80,13 @@ class Status: NSObject, Printable {
     
     /// 设置刷新数据
     class func loadStatus(#since_id : Int, max_id: Int, complete : (statuses:[Status]?)->()){
-        var parame =  ["access_token":sharedUserAccount!.access_token]
         StatusDAL.loadStatus(since_id: since_id, max_id: max_id) { (array) -> () in
             if array != nil {
                 let result = self.statuses(array!)
                 self.cacheStatusImage(result, complete: complete)
+            }else{
+                complete(statuses: nil)
             }
-            complete(statuses: nil)
         }
     }
     ///  缓存图片

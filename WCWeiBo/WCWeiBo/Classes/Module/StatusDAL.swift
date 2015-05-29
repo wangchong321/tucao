@@ -54,15 +54,15 @@ class StatusDAL: NSObject {
         if since_id > 0 {
             sql += "AND statusId > \(since_id) \n"
         }else if max_id > 0 {
-            sql += "ANF statusId < \(max_id) \n"
+            sql += "AND statusId < \(max_id) \n"
         }
         sql += "ORDER BY statusId DESC LIMIT 20"
         var list = manager.execRecordSet(sql)
-        
+        println(sql)
         var result : [[String : AnyObject]]?
         if list != nil {
+            result = [[String : AnyObject]]()
             for dic in list! {
-                result = [[String : AnyObject]]()
                 // 拿出字典中的字符串
                 let str = dic["status"] as! String
                 // 将字符串转换成二进制数据
@@ -72,6 +72,7 @@ class StatusDAL: NSObject {
                 result!.append(d)
             }
         }
+        println(result!.count)
         return result
     }
     
