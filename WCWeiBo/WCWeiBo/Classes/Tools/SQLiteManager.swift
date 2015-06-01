@@ -9,9 +9,16 @@
 import Foundation
 
 class SQLiteManager {
-
+    // swift 创建数据库上下文变量
     var db: COpaquePointer = nil
-    
+    // swift 调用打开数据库的方法传递参数的类型设定
+    private func test() {
+        var db: COpaquePointer = nil
+        var fileName = "111".cStringUsingEncoding(NSUTF8StringEncoding)!
+        sqlite3_open(fileName, &db)
+        
+        
+    }
     // 1> 私有静态成员
     static private let instance = SQLiteManager()
     // 2> 公共的类函数，作为全局访问点
