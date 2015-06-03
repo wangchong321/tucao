@@ -9,6 +9,8 @@
 import UIKit
 
 class HomeTableViewController: BascTableViewController,UIScrollViewDelegate,StatusCellDelegate {
+    /// 是否向下滚动
+    var isDownScroll: Bool = true
     @IBOutlet weak var titleBtn: WCTittleButton!
     /// 行高缓存
     var rowHeightCache = NSCache()
@@ -91,7 +93,7 @@ class HomeTableViewController: BascTableViewController,UIScrollViewDelegate,Stat
     func loadData(){
         // 如果是第一次登陆则加载已经缓存好的数据
         if firstLoad {
-        refreshControl?.beginRefreshing()
+            refreshControl?.beginRefreshing()
         }
         // 如果是下拉刷新
         var since_id = statuses?.first?.id ?? 0
@@ -102,6 +104,10 @@ class HomeTableViewController: BascTableViewController,UIScrollViewDelegate,Stat
             
             since_id = 0
             max_id = statuses?.last?.id ?? 0
+            for var i=0 ; i<statuses?.count ; i++ {
+                println(statuses![i].id)
+            }
+            //println(statuses?.last?.id)
         }
         
         Status.loadStatus(since_id: since_id , max_id : max_id) { (statuses) -> () in
@@ -116,14 +122,19 @@ class HomeTableViewController: BascTableViewController,UIScrollViewDelegate,Stat
                 println(self.statuses?.count)
                 println("下拉刷新完成3333333333333")
                 self.statuses = statuses! + self.statuses!
-            }else if max_id > 0 {
-
+                //TODO:
+            }else if max_id != 0 {
+                
                 self.statuses! += statuses!
                 self.pullupRefrechFlag = false
                 println("上拉刷新完成222222222222")
             }else {
-            self.statuses = statuses
-            self.firstLoad = false
+                self.statuses = statuses
+                self.firstLoad = false
+                println(statuses)
+                for var i=0 ; i<statuses?.count ; i++ {
+                    println(statuses![i].id)
+                }
             }
         }
     }
@@ -186,6 +197,26 @@ class HomeTableViewController: BascTableViewController,UIScrollViewDelegate,Stat
     }
 }
 extension HomeTableViewController: UIScrollViewDelegate {
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+//        if isDownScroll {
+//            // 记录cell将要到达的位置
+//            let cell_y = cell.frame.origin.y
+//            // 如果是新加载的则改变cell的y值
+//            cell.frame.origin.y = cell_y
+//            UIView.animateWithDuration(0.2, animations: { () -> Void in
+//                cell.frame.origin.y = 0
+//            })
+//        }
+        if isDownScroll {
+            cell.alpha = 0
+            cell.bounds.origin.y = -cell.bounds.height
+            UIView.animateWithDuration(0.5, animations: { () -> Void in
+                cell.bounds.origin.y = 0
+                cell.alpha = 1
+               // println(cell.bounds)
+            })
+        }
+    }
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         
@@ -195,7 +226,7 @@ extension HomeTableViewController: UIScrollViewDelegate {
         var s = scrollView.contentOffset.y - lasecontenoffset
         if s > 0 {
             // 到这里要隐藏itembar
-            
+            isDownScroll = true
             // 执行动画隐藏
             UIView.animateWithDuration(1.0, animations: { () -> Void in
                 
@@ -203,6 +234,7 @@ extension HomeTableViewController: UIScrollViewDelegate {
             })
             
         }else{
+            isDownScroll = false
             UIView.animateWithDuration(1.0, animations: { () -> Void in
                 
                 navigationController?.navigationBar.frame.origin.y = 20
@@ -214,4 +246,5 @@ extension HomeTableViewController: UIScrollViewDelegate {
         lasecontenoffset = scrollView.contentOffset.y
         
     }
+    
 }

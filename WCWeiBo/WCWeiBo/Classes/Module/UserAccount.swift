@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Alamofire
+
 class UserAccount: NSObject, NSCoding {
     // 2 定义属性
     // 用于调用access_token，接口获取授权后的access token。

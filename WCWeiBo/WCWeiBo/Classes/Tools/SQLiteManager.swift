@@ -17,7 +17,6 @@ class SQLiteManager {
         var fileName = "111".cStringUsingEncoding(NSUTF8StringEncoding)!
         sqlite3_open(fileName, &db)
         
-        
     }
     // 1> 私有静态成员
     static private let instance = SQLiteManager()

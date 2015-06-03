@@ -14,7 +14,7 @@ class StatusDAL: NSObject {
         let manager = SQLiteManager.sharedSQLManager()
         let list = StatusDAL.loadCacheStatus(since_id: since_id, max_id: max_id)
         // 1.判断是否有本地数据,
-        if list != nil {
+        if list?.count > 0 {
             // 2.如果有从数据库加载
             println("从数据库加载数据")
             complete(array: list)
